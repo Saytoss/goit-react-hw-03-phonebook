@@ -18,8 +18,9 @@ class App extends Component {
   };
 
   componentDidMount() {
+    console.log(this.state.contacts);
     const presistedContact = localStorage.getItem("contacts");
-
+    console.log(presistedContact);
     if (presistedContact) {
       this.setState({
         contacts: JSON.parse(presistedContact),
@@ -29,6 +30,8 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.contacts !== this.state.contacts) {
+      console.log("rabotaet");
+
       localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
     }
   }
