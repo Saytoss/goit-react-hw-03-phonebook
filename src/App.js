@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import ContactForm from "./components/ContactForm/ContactForm";
 import Filter from "./components/Filter/Filter";
 import ContactList from "./components/ContactList/ContactList";
+import storage from "./helpers/localStorage";
 
 import { toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+const { save, get } = storage;
 
 class App extends Component {
   state = {
@@ -18,21 +21,16 @@ class App extends Component {
   };
 
   componentDidMount() {
-    console.log(this.state.contacts);
-    const presistedContact = localStorage.getItem("contacts");
-    console.log(presistedContact);
-    if (presistedContact) {
+    if (get("contacts")) {
       this.setState({
-        contacts: JSON.parse(presistedContact),
+        contacts: [...get("contacts")],
       });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.contacts !== this.state.contacts) {
-      console.log("rabotaet");
-
-      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+      save("contacts", this.state.contacts);
     }
   }
 
